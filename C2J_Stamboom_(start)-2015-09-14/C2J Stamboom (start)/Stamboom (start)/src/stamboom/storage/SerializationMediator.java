@@ -5,8 +5,13 @@
 package stamboom.storage;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.io.*;
+import java.util.*;
+import java.util.logging.*;
+import static jdk.nashorn.internal.objects.Global.print;
 import stamboom.domain.Administratie;
 
 public class SerializationMediator implements IStorageMediator {
@@ -32,8 +37,25 @@ public class SerializationMediator implements IStorageMediator {
             throw new RuntimeException("Serialization mediator isn't initialized correctly.");
         }
         
+        Administratie admin = null;
+        
+        try {
+            FileInputStream file = new FileInputStream("admin.ser"); 
+            ObjectInputStream input = new ObjectInputStream(file);
+            admin = (Administratie) input.readObject();
+            input.close();
+            file.close();
+        } 
+        catch(IOException ex){
+           System.out.printf("Cannot perform output.", ex.toString());
+           
+        } 
+        catch (ClassNotFoundException ex) {
+            Logger.getLogger(SerializationMediator.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.printf("Class not found");
+        }
         // todo opgave 2
-        return null;
+        return admin;
     }
 
     @Override
@@ -41,8 +63,20 @@ public class SerializationMediator implements IStorageMediator {
         if (!isCorrectlyConfigured()) {
             throw new RuntimeException("Serialization mediator isn't initialized correctly.");
         }
-
+        try {
+            FileOutputStream file = new FileOutputStream("admin.ser"); 
+            OutputStream buffer = new BufferedOutputStream(file); 
+            ObjectOutput output = new ObjectOutputStream(buffer);
+            output.writeObject(admin);
+            output.close();
+            file.close();
+            System.out.printf("File is saved as: admin.ser");
+            
+        } catch(IOException ex){
+           System.out.printf("Cannot perform output.", ex.toString());
+        }
         // todo opgave 2
+        
   
     }
 

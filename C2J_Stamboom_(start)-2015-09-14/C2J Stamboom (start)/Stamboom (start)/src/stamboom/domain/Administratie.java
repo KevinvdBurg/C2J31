@@ -262,6 +262,7 @@ public class Administratie {
      * @return alle personen met een achternaam gelijk aan de meegegeven
      * achternaam (ongeacht hoofd- en kleine letters)
      */
+    
     public ArrayList<Persoon> getPersonenMetAchternaam(String achternaam) {
         //todo opgave 1
         ArrayList<Persoon> result = new ArrayList<>();
