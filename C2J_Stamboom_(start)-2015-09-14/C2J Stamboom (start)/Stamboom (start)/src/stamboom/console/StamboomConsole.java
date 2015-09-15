@@ -1,7 +1,9 @@
 package stamboom.console;
 
+import java.io.IOException;
 import stamboom.domain.*;
 import java.util.*;
+import javax.swing.JFileChooser;
 import stamboom.util.StringUtilities;
 import stamboom.controller.StamboomController;
 
@@ -19,7 +21,7 @@ public class StamboomConsole {
     }
 
     // ***********methoden***********************************************
-    public void startMenu() {
+    public void startMenu() throws IOException {
         MenuItem choice = kiesMenuItem();
         while (choice != MenuItem.EXIT) {
             switch (choice) {
@@ -40,6 +42,20 @@ public class StamboomConsole {
                     break;
                 case SHOW_GEZIN:
                     toonGezinsgegevens();
+                    break;
+                case SAVE:
+                    JFileChooser saveChooser = new JFileChooser();
+                    
+                    saveChooser.showSaveDialog(saveChooser);
+                    
+                    controller.serialize(saveChooser.getCurrentDirectory());
+                    break;
+                case LOAD:
+                    JFileChooser loadChooser = new JFileChooser();
+                    
+                    loadChooser.showOpenDialog(loadChooser);
+                    
+                    controller.deserialize(loadChooser.getSelectedFile());
                     break;
             }
             choice = kiesMenuItem();
