@@ -19,8 +19,8 @@ public class Administratie implements Serializable{
      */
     public Administratie() {
         //todo opgave 1
-        this.personen = null;
-        this.gezinnen = null;
+        this.personen = new ArrayList<Persoon>();
+        this.gezinnen = new ArrayList<Gezin>();
         nextGezinsNr = 1;
         nextPersNr = 1;
     }
