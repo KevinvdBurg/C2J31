@@ -1,8 +1,9 @@
 package stamboom.domain;
 
 import java.util.*;
+import java.io.Serializable;
 
-public class Administratie {
+public class Administratie implements Serializable{
 
     //************************datavelden*************************************
     private int nextGezinsNr;

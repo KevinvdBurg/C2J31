@@ -29,6 +29,7 @@ public class SerializationMediator implements IStorageMediator {
      */
     public SerializationMediator() {
         props = null;
+        props.setProperty("file", "/tmp/admin.ser" );
     }
 
     @Override
@@ -40,7 +41,7 @@ public class SerializationMediator implements IStorageMediator {
         Administratie admin = null;
         
         try {
-            FileInputStream file = new FileInputStream("admin.ser"); 
+            FileInputStream file = new FileInputStream(props.getProperty("file")); 
             ObjectInputStream input = new ObjectInputStream(file);
             admin = (Administratie) input.readObject();
             input.close();
@@ -64,7 +65,7 @@ public class SerializationMediator implements IStorageMediator {
             throw new RuntimeException("Serialization mediator isn't initialized correctly.");
         }
         try {
-            FileOutputStream file = new FileOutputStream("admin.ser"); 
+            FileOutputStream file = new FileOutputStream(props.getProperty("file")); 
             OutputStream buffer = new BufferedOutputStream(file); 
             ObjectOutput output = new ObjectOutputStream(buffer);
             output.writeObject(admin);

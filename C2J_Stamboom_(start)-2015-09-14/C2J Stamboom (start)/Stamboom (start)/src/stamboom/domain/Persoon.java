@@ -6,8 +6,9 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import stamboom.util.StringUtilities;
+import java.io.Serializable;
 
-public class Persoon {
+public class Persoon implements Serializable{
 
     // ********datavelden**************************************
     private final int nr;

@@ -4,9 +4,18 @@
  */
 package stamboom.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import stamboom.domain.Administratie;
 import stamboom.storage.IStorageMediator;
 import stamboom.storage.SerializationMediator;
@@ -44,11 +53,23 @@ public class StamboomController {
      */
     public void serialize(File bestand) throws IOException {
         //todo opgave 2
-        Properties prop = new Properties();
         
-        prop.put("key", bestand);
-        storageMediator = new SerializationMediator();
-        storageMediator.save(admin);
+        try {
+            FileOutputStream file = new FileOutputStream(bestand); 
+            OutputStream buffer = new BufferedOutputStream(file); 
+            ObjectOutput output = new ObjectOutputStream(buffer);
+            output.writeObject(admin);
+            output.close();
+            file.close();
+            System.out.printf("File is saved as: admin.ser");
+            
+        } 
+        catch(IOException ex){
+           System.out.printf("Cannot perform output.", ex.toString());
+        }
+        
+        
+        
         //ERIC TO THE RESCUE!
         
     }
@@ -59,9 +80,22 @@ public class StamboomController {
      * @param bestand
      * @throws IOException
      */
-    public void deserialize(File bestand) throws IOException {
-        //todo opgave 2
-  
+    public void deserialize(File bestand) throws IOException {        
+        try {
+            FileInputStream file = new FileInputStream(bestand); 
+            ObjectInputStream input = new ObjectInputStream(file);
+            admin = (Administratie) input.readObject();
+            input.close();
+            file.close();
+        } 
+        catch(IOException ex){
+           System.out.printf("Cannot perform output.", ex.toString());
+           
+        } 
+        catch (ClassNotFoundException ex) {
+            Logger.getLogger(SerializationMediator.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.printf("Class not found");
+        }
     }
     
     // opgave 4
