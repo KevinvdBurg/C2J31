@@ -312,7 +312,23 @@ public class Persoon implements Serializable{
      */
     public int afmetingStamboom() {
         //todo opgave 2
-        return -1;
+        
+        int result = 1;
+        
+        if (ouderlijkGezin != null)
+        {
+            if (ouderlijkGezin.getOuder1() != null)
+            {
+                result += ouderlijkGezin.getOuder1().afmetingStamboom();   
+            }
+            
+            if (ouderlijkGezin.getOuder2() != null)
+            {
+                result += ouderlijkGezin.getOuder2().afmetingStamboom();
+            }
+        }
+        
+        return result;
     }
 
     /**
