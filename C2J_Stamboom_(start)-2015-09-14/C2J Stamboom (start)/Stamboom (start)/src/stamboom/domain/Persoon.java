@@ -345,6 +345,22 @@ public class Persoon implements Serializable{
      */
     void voegJouwStamboomToe(ArrayList<PersoonMetGeneratie> lijst, int g) {
         //todo opgave 2
+        g += 1;
+        PersoonMetGeneratie persoonMetGeneratie = new PersoonMetGeneratie(this.toString(), g);
+        lijst.add(persoonMetGeneratie);
+        
+        if (this.ouderlijkGezin != null)
+        {
+            if (this.ouderlijkGezin.getOuder1() != null)
+            {
+                this.ouderlijkGezin.getOuder1().voegJouwStamboomToe(lijst, g);
+            }
+            
+            if (this.ouderlijkGezin.getOuder2() != null)
+            {
+                this.ouderlijkGezin.getOuder2().voegJouwStamboomToe(lijst, g);
+            }
+        }
     }
 
     /**
