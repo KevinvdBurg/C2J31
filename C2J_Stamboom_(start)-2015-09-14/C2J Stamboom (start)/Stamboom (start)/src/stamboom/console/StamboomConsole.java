@@ -3,6 +3,8 @@ package stamboom.console;
 import java.io.IOException;
 import stamboom.domain.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import stamboom.util.StringUtilities;
 import stamboom.controller.StamboomController;
@@ -14,7 +16,7 @@ public class StamboomConsole {
     private final StamboomController controller;
 
     // **********constructoren*******************************************
-    public StamboomConsole(StamboomController controller) {
+    public StamboomConsole(StamboomController controller) throws IOException {
         input = new Scanner(System.in);
         this.controller = controller;
         this.startMenu();
@@ -57,6 +59,12 @@ public class StamboomConsole {
                     
                     controller.deserialize(loadChooser.getSelectedFile());
                     break;
+                case GETSTAMBOOM:
+                    for (Persoon person : controller.getAdministratie().getPersonen())
+                    {   
+                        System.out.print(person.stamboomAlsString());
+                    }
+                    
             }
             choice = kiesMenuItem();
         }
@@ -273,7 +281,11 @@ public class StamboomConsole {
     public static void main(String[] arg) {
         StamboomController controller = new StamboomController();
 
-        StamboomConsole console = new StamboomConsole(controller);
-        //console.startMenu();
+        try {
+            StamboomConsole console = new StamboomConsole(controller);
+            //console.startMenu();
+        } catch (IOException ex) {
+            Logger.getLogger(StamboomConsole.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

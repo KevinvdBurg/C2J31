@@ -67,11 +67,6 @@ public class StamboomController {
         catch(IOException ex){
            System.out.printf("Cannot perform output.", ex.toString());
         }
-        
-        
-        
-        //ERIC TO THE RESCUE!
-        
     }
 
     /**

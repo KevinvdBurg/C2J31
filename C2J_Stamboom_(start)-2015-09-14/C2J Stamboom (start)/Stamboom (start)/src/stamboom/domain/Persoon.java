@@ -389,7 +389,23 @@ public class Persoon implements Serializable{
     public String stamboomAlsString() {
         StringBuilder builder = new StringBuilder();
         //todo opgave 2
-
+        
+        ArrayList<PersoonMetGeneratie> stamboom = new ArrayList<>();
+        int g = 0;
+        
+        voegJouwStamboomToe(stamboom, g);
+        
+        for (PersoonMetGeneratie personMetGeneratie : stamboom)
+        {
+            for (int i = 0; i < personMetGeneratie.getGeneratie(); i++)
+            {
+                builder.append("\t");
+            }
+            builder.append(personMetGeneratie.getPersoonsgegevens());
+            
+            builder.append("\n");
+        }
+        
         return builder.toString();
     }
 }

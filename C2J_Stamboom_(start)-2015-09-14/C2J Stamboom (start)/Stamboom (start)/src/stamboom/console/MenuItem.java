@@ -10,7 +10,9 @@ public enum MenuItem {
     SHOW_PERS("toon gegevens persoon"),
     SHOW_GEZIN("toon gegevens gezin"),
     SAVE("save admin"),
-    LOAD("load admin;");
+    LOAD("load admin;"),
+    GETSTAMBOOM("get the entire lineage to infinity"),
+    GETSTAMBOOMCOUNT("get the amount of ancestors as int");
     
     private final String omschr;
 
