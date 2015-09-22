@@ -103,7 +103,14 @@ public class Persoon implements Serializable{
      */
     public String getNaam() {
         //todo opgave 1
-        return getInitialen() + " " + tussenvoegsel + " " + achternaam;
+        
+        if(tussenvoegsel.trim() == ""){
+            return getInitialen() + " " + achternaam;
+        }
+        else{
+            return getInitialen() + " " + tussenvoegsel + " " + achternaam;
+        }
+        
     }
 
     /**
