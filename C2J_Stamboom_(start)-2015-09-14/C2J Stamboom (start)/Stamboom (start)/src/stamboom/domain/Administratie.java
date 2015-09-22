@@ -2,6 +2,7 @@ package stamboom.domain;
 
 import java.util.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 
 public class Administratie implements Serializable{
 
@@ -68,18 +69,64 @@ public class Administratie implements Serializable{
             throw new IllegalArgumentException("lege geboorteplaats is niet toegestaan");
         }
 
-        //todo opgave 1
-        int persNr = 0;
-        
-        for(Persoon person : personen)
-        {
-            if (persNr < person.getNr())
-            {
-                persNr = person.getNr() + 1;
+        List<String> voornamenVal = new ArrayList<String>();
+        String[] voornamenRes;
+        String achternaamVal = null;
+        String tussenvoegselVal = null;
+        String geboorteplaatsVal = null;
+        Persoon newPersoon = null;
+        int nr = 0;
+
+        for (int i = 0; i < vnamen.length; i++) {
+            CapitalizeString(vnamen[i]);
+            voornamenVal.add(CapitalizeString(vnamen[i]));
+        }
+
+        tussenvoegselVal = tvoegsel.toLowerCase();
+        achternaamVal = CapitalizeString(anaam);
+        geboorteplaatsVal = CapitalizeString(gebplaats);
+        voornamenRes = voornamenVal.toArray(new String[0]);
+
+        if (!this.personen.isEmpty()) {
+            nr = this.personen.get(this.personen.size() - 1).getNr() + 1;
+        }
+        newPersoon = new Persoon(nextPersNr, voornamenRes, achternaamVal, tussenvoegselVal, gebdat, geboorteplaatsVal, geslacht, ouderlijkGezin);
+
+        for (Persoon p : this.personen) {
+            boolean val1;
+            val1 = (p.getInitialen().toLowerCase().equals(newPersoon.getInitialen().toLowerCase()));
+            boolean val2;
+            val2 = (p.getAchternaam().toLowerCase().equals(newPersoon.getAchternaam().toLowerCase()));
+            boolean val3;
+            val3 = (p.getGebPlaats().toLowerCase().equals(newPersoon.getGebPlaats().toLowerCase()));
+            SimpleDateFormat sdf = new SimpleDateFormat("d-M-yyyy");
+
+            String gebdat1;
+            gebdat1 = sdf.format(p.getGebDat().getTime());
+            String gebdat2;
+            gebdat2 = sdf.format(newPersoon.getGebDat().getTime());
+
+            boolean val4;
+            val4 = (gebdat1.equals(gebdat2));
+
+            if (val1 && val2 && val3 && val4) {
+                return null;
             }
         }
 
-        return new Persoon(persNr, vnamen, anaam, tvoegsel, gebdat, gebplaats, geslacht, ouderlijkGezin);
+        if (ouderlijkGezin != null) {
+            if (ouderlijkGezin.getOuder2() != null) {
+                if (!ouderlijkGezin.getOuder1().equals(newPersoon)
+                        && !ouderlijkGezin.getOuder2().equals(newPersoon)) {
+                    ouderlijkGezin.breidUitMet(newPersoon);
+                }
+            }
+        }
+
+        this.personen.add(newPersoon);
+
+        nextPersNr++;
+        return newPersoon;
     }
 
     /**
@@ -150,7 +197,7 @@ public class Administratie implements Serializable{
      * @param datum
      * @return true als scheiding geaccepteerd, anders false
      */
-    public boolean setScheiding(Gezin gezin, Calendar datum) {
+    public boolean setScheiding(Gezin gezin, GregorianCalendar datum) {
         return gezin.setScheiding(datum);
     }
 
@@ -163,7 +210,7 @@ public class Administratie implements Serializable{
      * @param datum de huwelijksdatum
      * @return false als huwelijk niet mocht worden voltrokken, anders true
      */
-    public boolean setHuwelijk(Gezin gezin, Calendar datum) {
+    public boolean setHuwelijk(Gezin gezin, GregorianCalendar datum) {
         return gezin.setHuwelijk(datum);
     }
 
@@ -191,7 +238,7 @@ public class Administratie implements Serializable{
      * @return null als ouder1 = ouder2 of als een van de ouders getrouwd is
      * anders het gehuwde gezin
      */
-    public Gezin addHuwelijk(Persoon ouder1, Persoon ouder2, Calendar huwdatum) {
+    public Gezin addHuwelijk(Persoon ouder1, Persoon ouder2, GregorianCalendar huwdatum) {
         //todo opgave 1
         Gezin result = null;
         for(Gezin family : gezinnen)
@@ -333,5 +380,23 @@ public class Administratie implements Serializable{
             return gezinnen.get(gezinsNr - 1);
         }
         return null;
+    }
+    
+    public String CapitalizeString(String str) {
+        String tempVNaam = str.toLowerCase();
+        tempVNaam = tempVNaam.substring(0, 1).toUpperCase() + tempVNaam.substring(1, tempVNaam.length());
+
+        while (tempVNaam.contains("  ")) {
+            tempVNaam = tempVNaam.replace("  ", " ");
+        }
+
+        if (tempVNaam.startsWith(" ")) {
+            tempVNaam = tempVNaam.substring(1, tempVNaam.length());
+        }
+
+        if (tempVNaam.endsWith(" ")) {
+            tempVNaam = tempVNaam.substring(0, tempVNaam.length() - 1);
+        }
+        return tempVNaam;
     }
 }

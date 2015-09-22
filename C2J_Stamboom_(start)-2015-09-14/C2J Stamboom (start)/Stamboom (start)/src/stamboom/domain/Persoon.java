@@ -203,7 +203,7 @@ public class Persoon implements Serializable{
             if (ouderlijkGezin.getOuder2() != null) {
                 sb.append("; 2e ouder: ").append(ouderlijkGezin.getOuder2().getNaam());
             }
-        }
+    }
         if (!alsOuderBetrokkenIn.isEmpty()) {
             sb.append("; is ouder in gezin ");
 

@@ -17,13 +17,13 @@ public class Gezin {
     /**
      * kan onbekend zijn (dan is het een ongehuwd gezin):
      */
-    private Calendar huwelijksdatum;
+    private GregorianCalendar huwelijksdatum;
     /**
      * kan null zijn; als huwelijksdatum null is, dan zal scheidingsdatum ook null
      * zijn; Als huwelijksdatum en scheidingsdatum bekend zijn, dan zal de
      * scheidingsdatum na het huewelijk zijn.
      */
-    private Calendar scheidingsdatum;
+    private GregorianCalendar scheidingsdatum;
 
     // *********constructoren***********************************
     /**
@@ -138,7 +138,7 @@ public class Gezin {
     /**
      * @return de datum van scheiding (kan null zijn)
      */
-    public Calendar getScheidingsdatum() {
+    public GregorianCalendar getScheidingsdatum() {
         return scheidingsdatum;
     }
 
@@ -149,9 +149,8 @@ public class Gezin {
      * @param datum moet na de huwelijksdatum zijn.
      * @return true als scheiding kan worden voltrokken, anders false
      */
-    boolean setScheiding(Calendar datum) {
-        if (this.scheidingsdatum == null && huwelijksdatum != null
-                && datum.after(huwelijksdatum) && datum != null) {
+    boolean setScheiding(GregorianCalendar datum) {
+        if (this.scheidingsdatum == null && huwelijksdatum != null && datum.after(huwelijksdatum) && datum != null) {
             this.scheidingsdatum = datum;
             return true;
         } else {
@@ -168,11 +167,12 @@ public class Gezin {
      * @param datum de huwelijksdatum
      * @return false als huwelijk niet mocht worden voltrokken, anders true
      */
-    boolean setHuwelijk(Calendar datum) {
+    boolean setHuwelijk(GregorianCalendar datum) {
         //todo opgave 1
         boolean result = false;
         if(isOngehuwd() && this.ouder1.kanTrouwenOp(datum) && this.ouder2.kanTrouwenOp(datum))
         {
+            this.huwelijksdatum = datum;
             result = true;
         }
         
@@ -186,22 +186,26 @@ public class Gezin {
      * kinderen uit deze relatie (per kind voorafgegaan door ' -')
      */
     public String beschrijving() {
-        //todo opgave 1
-        String Result = "";
+       StringBuilder s = new StringBuilder();
+        s.append(this.nr).append(" ");
+        s.append(ouder1.getNaam());
+        if (ouder2 != null) {
+            s.append(" met ");
+            s.append(ouder2.getNaam());
+        }
+        if (heeftGetrouwdeOudersOp(Calendar.getInstance())) {
+            s.append(" ").append(StringUtilities.datumString(huwelijksdatum));
+        }
         
-        Result = nr + " " + ouder1 + " " + ouder2 + " " + huwelijksdatum;
-        
-        if(!kinderen.isEmpty())
-        {
-            Result += "; kinderen:";
-            
-            for(Persoon child : kinderen)
-            {
-                Result += " -" + child.getVoornamen();
+        if (!kinderen.isEmpty()) {
+            s.append( "; kinderen:");
+            for (Persoon kind: kinderen) {
+                s.append(" -");
+                s.append(kind.getVoornamen());
             }
         }
         
-        return Result;
+        return s.toString();
     }
 
     /**
@@ -273,8 +277,9 @@ public class Gezin {
      * @param datum
      * @return true als dit een gescheiden huwelijk is op datum, anders false
      */
-    public boolean heeftGescheidenOudersOp(Calendar datum) {
+    public boolean heeftGescheidenOudersOp(GregorianCalendar datum) {
         //todo opgave 1
-        return datum.equals(this.getScheidingsdatum());
+        GregorianCalendar sDatum = this.getScheidingsdatum();
+        return datum.equals(sDatum);
     }
 }

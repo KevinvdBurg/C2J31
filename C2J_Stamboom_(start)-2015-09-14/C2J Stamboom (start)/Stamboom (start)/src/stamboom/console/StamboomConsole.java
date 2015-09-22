@@ -142,7 +142,7 @@ public class StamboomConsole {
             System.out.println("onjuiste invoer tweede partner");
             return;
         }
-        Calendar datum = readDate("datum van huwelijk");
+        GregorianCalendar datum = (GregorianCalendar) readDate("datum van huwelijk");
         Gezin g = getAdmin().addHuwelijk(partner1, partner2, datum);
         if (g == null) {
             System.out.println("huwelijk niet voltrokken");
@@ -156,7 +156,7 @@ public class StamboomConsole {
         Calendar datum = readDate("datum van scheiding");
         Gezin g = getAdmin().getGezin(gezinsNr);
         if (g != null) {
-            boolean gelukt = getAdmin().setScheiding(g,datum);
+            boolean gelukt = getAdmin().setScheiding(g, (GregorianCalendar) datum);
             if (!gelukt) {
                 System.out.println("scheiding niet geaccepteerd");
             }

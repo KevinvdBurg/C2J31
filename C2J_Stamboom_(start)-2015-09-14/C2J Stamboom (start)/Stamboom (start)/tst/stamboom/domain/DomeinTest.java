@@ -291,7 +291,7 @@ public class DomeinTest extends TestCase{
         Persoon jan = adm.addPersoon(Geslacht.MAN, new String[]{"Jan", "Jacobus"}, "Peters",
                 "", new GregorianCalendar(1980, Calendar.APRIL, 23), "Venray", pietEnTeuntje);
         Gezin annieEnJan = adm.addOngehuwdGezin(annie, jan);
-        Gezin huwelijk = adm.addHuwelijk(jan, annie, nu);
+        Gezin huwelijk = adm.addHuwelijk(jan, annie, (GregorianCalendar) nu);
         assertEquals("ongehuwd gezin trouwt", huwelijk, annieEnJan);
         assertEquals("huwelijksdatum bekend", nu, huwelijk.getHuwelijksdatum());
         assertNull("scheidingsdatum onbekend", huwelijk.getScheidingsdatum());
@@ -330,7 +330,7 @@ public class DomeinTest extends TestCase{
 
         Persoon john = adm.addPersoon(Geslacht.MAN, new String[]{"John", "Adriaan"}, "Krop",
                 "", new GregorianCalendar(1973, Calendar.JANUARY, 3), "Eindhoven", null);
-        Gezin johnEnRoel = adm.addHuwelijk(john, roel, nu);
+        Gezin johnEnRoel = adm.addHuwelijk(john, roel, (GregorianCalendar) nu);
         assertNotNull("huwelijk waarvoor een van de partners bij een ongehuwd gezin betrokken is",
                 johnEnRoel);
 
@@ -345,9 +345,9 @@ public class DomeinTest extends TestCase{
                 "VaN deR", new GregorianCalendar(1995, Calendar.APRIL, 13), "venLO",
                 null);
 
-        assertNull("ouders verschillend", adm.addHuwelijk(pim, pim, nu));
-        assertNull("ouders ongehuwd", adm.addHuwelijk(roel, pim, Calendar.getInstance()));
-        assertNull("ouders ongehuwd", adm.addHuwelijk(pim, roel, Calendar.getInstance()));
+        assertNull("ouders verschillend", adm.addHuwelijk(pim, pim, (GregorianCalendar) nu));
+        assertNull("ouders ongehuwd", adm.addHuwelijk(roel, pim, (GregorianCalendar) Calendar.getInstance()));
+        assertNull("ouders ongehuwd", adm.addHuwelijk(pim, roel, (GregorianCalendar) Calendar.getInstance()));
 
         Calendar datum1 = new GregorianCalendar(1995, Calendar.APRIL, 13);
         Calendar datum2 = new GregorianCalendar(1996, Calendar.APRIL, 13);
@@ -359,31 +359,31 @@ public class DomeinTest extends TestCase{
                 "", new GregorianCalendar(1971, Calendar.APRIL, 3), "Bergen op Zoom", null);
         Persoon jacco = adm.addPersoon(Geslacht.MAN, new String[]{"Jacco", "Jacobus"}, "Hop",
                 "", new GregorianCalendar(1973, Calendar.APRIL, 23), "Venray", null);
-        Gezin miepEnJacco = adm.addHuwelijk(miep, jacco, datum1);
+        Gezin miepEnJacco = adm.addHuwelijk(miep, jacco, (GregorianCalendar) datum1);
         assertNotNull("Miep en Jacco hebben geen gezin", miepEnJacco);
-        miepEnJacco.setScheiding(datum3);
+        miepEnJacco.setScheiding((GregorianCalendar) datum3);
 
         Persoon aafke = adm.addPersoon(Geslacht.VROUW, new String[]{"aafke"}, "Dael",
                 "", new GregorianCalendar(1971, Calendar.APRIL, 3), "Bergen op Zoom", null);
-        assertNull("jacco is nog getrouwd", adm.addHuwelijk(aafke, jacco, datum2));
-        assertNotNull("jacco is niet meer getrouwd", adm.addHuwelijk(aafke, jacco, datum4));
+        assertNull("jacco is nog getrouwd", adm.addHuwelijk(aafke, jacco, (GregorianCalendar) datum2));
+        assertNotNull("jacco is niet meer getrouwd", adm.addHuwelijk(aafke, jacco, (GregorianCalendar) datum4));
 
         Persoon frank = adm.addPersoon(Geslacht.MAN, new String[]{"Frank", "Johan"}, "Kroes",
                 "", new GregorianCalendar(1973, Calendar.APRIL, 23), "Helmond", null);
 
-        assertNull("aafke is naderhand getrouwd", adm.addHuwelijk(aafke, frank, datum1));
+        assertNull("aafke is naderhand getrouwd", adm.addHuwelijk(aafke, frank, (GregorianCalendar) datum1));
 
         // Controleert of minderjarige personen niet ook kunnen trouwen
         Persoon henk = adm.addPersoon(Geslacht.MAN, new String[]{"Henk"},
                 "Rotterdam", "van", new GregorianCalendar(1990, Calendar.APRIL, 5), "Dordrecht", null);
         Persoon marjolein = adm.addPersoon(Geslacht.VROUW, new String[]{"Marjolein"},
                 "Leeuw", "de", new GregorianCalendar(1970, Calendar.DECEMBER, 20), "Rotterdam", null);
-        assertNull("henk is minderjarig", adm.addHuwelijk(henk, marjolein, datum1));
+        assertNull("henk is minderjarig", adm.addHuwelijk(henk, marjolein, (GregorianCalendar) datum1));
 
         // Controleert of er een gezin wordt toegevoegd als ouders niet in een gezin direct trouwen
         Persoon flip = adm.addPersoon(Geslacht.MAN, new String[]{"flip"},
                 "Petteren", "van", new GregorianCalendar(1965, Calendar.APRIL, 5), "Dordrecht", null);
-        Gezin flipEnMarjolein = adm.addHuwelijk(flip, marjolein, datum4);
+        Gezin flipEnMarjolein = adm.addHuwelijk(flip, marjolein, (GregorianCalendar) datum4);
         assertEquals("Gezin was niet toegevoegd tijdens huwelijk",
                 adm.getGezin(flipEnMarjolein.getNr()), flipEnMarjolein);
     }
@@ -411,12 +411,12 @@ public class DomeinTest extends TestCase{
         Calendar huwdatum = new GregorianCalendar(2008, Calendar.FEBRUARY, 3);
         Calendar laterDanHuwdatum = new GregorianCalendar(2008, Calendar.FEBRUARY, 4);
         Calendar eerderDanHuwdatum = new GregorianCalendar(2008, Calendar.FEBRUARY, 2);
-        assertTrue("huwelijk is niet voltrokken", annieEnJan.setHuwelijk(huwdatum));
+        assertTrue("huwelijk is niet voltrokken", annieEnJan.setHuwelijk((GregorianCalendar) huwdatum));
         assertTrue("huwelijksdatum later invoeren onjuist", annieEnJan.isHuwelijkOp(nu));
         assertTrue("huwelijksdatum invoeren onjuist", annieEnJan.isHuwelijkOp(laterDanHuwdatum));
         assertFalse("huwelijksdatum invoeren onjuist", annieEnJan.isHuwelijkOp(eerderDanHuwdatum));
 
-        assertFalse("huwelijk is ten onrechte voltrokken", annieEnJan.setHuwelijk(nu));
+        assertFalse("huwelijk is ten onrechte voltrokken", annieEnJan.setHuwelijk((GregorianCalendar) nu));
         assertEquals("2e huwelijksdatum invoeren onjuist", huwdatum, annieEnJan.getHuwelijksdatum());
 
 
@@ -426,7 +426,7 @@ public class DomeinTest extends TestCase{
         Persoon pim = adm.addPersoon(Geslacht.MAN, new String[]{"Pim"}, "Pieterse",
                 "VaN deR", new GregorianCalendar(1985, Calendar.APRIL, 13), "venLO",
                 null);
-        Gezin annieEnPim = adm.addHuwelijk(annie, pim, eerderDanHuwdatum);
+        Gezin annieEnPim = adm.addHuwelijk(annie, pim, (GregorianCalendar) eerderDanHuwdatum);
         assertNull("huwelijk niet toegestaan vanwege toekomstig huwelijk", annieEnPim);
     }
 
@@ -437,7 +437,7 @@ public class DomeinTest extends TestCase{
         pietEnTeuntje.setScheiding(new GregorianCalendar(1970, Calendar.APRIL, 23));
         assertNull("scheidingsdatum na huwelijksdatum", pietEnTeuntje.getScheidingsdatum());
         //correcte scheidingsdatum
-        Calendar scheiding = new GregorianCalendar(1974, Calendar.JULY, 2);
+        GregorianCalendar scheiding = new GregorianCalendar(1974, Calendar.JULY, 2);
         pietEnTeuntje.setScheiding(scheiding);
         assertEquals("scheidingsdatum ontbreekt", scheiding, pietEnTeuntje.getScheidingsdatum());
         //andere scheidingsdatum wordt niet meer geaccepteerd
@@ -449,7 +449,7 @@ public class DomeinTest extends TestCase{
          * @return true als dit een gescheiden huwelijk is op datum, anders
          * false
          */
-        assertTrue("wel gescheiden", pietEnTeuntje.heeftGescheidenOudersOp(nu));
+        assertTrue("wel gescheiden", pietEnTeuntje.heeftGescheidenOudersOp((GregorianCalendar) nu));
         assertFalse("nog niet gescheiden", pietEnTeuntje.heeftGescheidenOudersOp(
                 new GregorianCalendar(1973, Calendar.JANUARY, 1)));
         assertFalse("nog niet getrouwd", pietEnTeuntje.heeftGescheidenOudersOp(
@@ -464,7 +464,7 @@ public class DomeinTest extends TestCase{
         assertFalse("nog niet getrouwd", pietEnTeuntje.heeftGescheidenOudersOp(
                 new GregorianCalendar(1970, Calendar.JANUARY, 1)));
         pietEnTeuntje.setScheiding(new GregorianCalendar(1973, Calendar.JANUARY, 1));
-        assertTrue("wel gescheiden", pietEnTeuntje.heeftGescheidenOudersOp(nu));
+        assertTrue("wel gescheiden", pietEnTeuntje.heeftGescheidenOudersOp((GregorianCalendar) nu));
         assertTrue("wel gescheiden", pietEnTeuntje.heeftGescheidenOudersOp(
                 new GregorianCalendar(1973, Calendar.JANUARY, 2)));
         assertFalse("nog niet gescheiden", pietEnTeuntje.heeftGescheidenOudersOp(

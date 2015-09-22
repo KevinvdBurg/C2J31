@@ -6,6 +6,7 @@ package stamboom.gui;
 
 import java.net.URL;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
@@ -162,7 +163,7 @@ public class StamboomFXController extends StamboomController implements Initiali
         }
         Gezin g;
         if (huwdatum != null) {
-            g = getAdministratie().addHuwelijk(ouder1, ouder2, huwdatum);
+            g = getAdministratie().addHuwelijk(ouder1, ouder2, (GregorianCalendar) huwdatum);
             if (g == null) {
                 showDialog("Warning", "Invoer huwelijk is niet geaccepteerd");
             } else {
@@ -170,7 +171,7 @@ public class StamboomFXController extends StamboomController implements Initiali
                 try {
                     scheidingsdatum = StringUtilities.datum(tfScheidingInvoer.getText());
                     if(scheidingsdatum != null){
-                        getAdministratie().setScheiding(g, scheidingsdatum);
+                        getAdministratie().setScheiding(g, (GregorianCalendar) scheidingsdatum);
                     }
                 } catch (IllegalArgumentException exc) {
                     showDialog("Warning", "scheidingsdatum :" + exc.getMessage());
