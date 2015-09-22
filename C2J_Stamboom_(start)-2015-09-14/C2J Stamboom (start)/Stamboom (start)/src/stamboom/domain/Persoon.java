@@ -35,12 +35,13 @@ public class Persoon implements Serializable{
     Persoon(int persNr, String[] vnamen, String anaam, String tvoegsel,
             Calendar gebdat, String gebplaats, Geslacht g, Gezin ouderlijkGezin) {
         //todo opgave 1
+        
         this.nr = persNr;
         this.voornamen = vnamen;
         this.achternaam = anaam;
         this.tussenvoegsel = tvoegsel;
         this.gebDat = gebdat;
-        this.gebPlaats = gebplaats;
+        this.gebPlaats = gebplaats.substring(0, 1).toUpperCase() + gebplaats.substring(1);
         this.ouderlijkGezin = ouderlijkGezin;
         this.alsOuderBetrokkenIn = new ArrayList<>();
         this.geslacht = g;
