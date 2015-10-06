@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Gezin.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;StamboomProject&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">stamboom.domain</a> &gt; <span class="el_source">Gezin.java</span></div><h1>Gezin.java</h1><pre class="source lang-java linenums">package stamboom.domain;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
+import stamboom.util.StringUtilities;
+
+public class Gezin {
+
+    // *********datavelden*************************************
+    private final int nr;
+    private final Persoon ouder1;
+    private final Persoon ouder2;
+    private final List&lt;Persoon&gt; kinderen;
+    /**
+     * kan onbekend zijn (dan is het een ongehuwd gezin):
+     */
+    private Calendar huwelijksdatum;
+    /**
+     * kan null zijn; als huwelijksdatum null is, dan zal scheidingsdatum ook null
+     * zijn; Als huwelijksdatum en scheidingsdatum bekend zijn, dan zal de
+     * scheidingsdatum na het huewelijk zijn.
+     */
+    private Calendar scheidingsdatum;
+
+    // *********constructoren***********************************
+    /**
+     * er wordt een (kinderloos) gezin met ouder1 en ouder2 als ouders
+     * geregistreerd; de huwelijks-(en scheidings)datum zijn onbekend (null);
+     * het gezin krijgt gezinsNr als nummer;
+     *
+     * @param ouder1 mag niet null zijn, moet al geboren zijn,
+     * en mag geen famillie van ouder2 zijn.
+     * @param ouder2 ongelijk aan ouder1, moet al geboren zijn,
+     * en mag geen familie van ouder1 zijn.
+     */
+<span class="nc" id="L36">    Gezin(int gezinsNr, Persoon ouder1, Persoon ouder2) {</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        if (ouder1 == null) {</span>
+<span class="nc" id="L38">            throw new RuntimeException(&quot;Eerste ouder mag niet null zijn&quot;);</span>
+        }
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (ouder1 == ouder2) {</span>
+<span class="nc" id="L41">            throw new RuntimeException(&quot;ouders hetzelfde&quot;);</span>
+        }
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        if (ouder2 != null) {</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">            if (ouder1.getOuderlijkGezin() != null</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">                    &amp;&amp; ouder1.getOuderlijkGezin().isFamilieVan(ouder2)) {</span>
+<span class="nc" id="L46">                throw new RuntimeException(&quot;ouder 2 is familie van ouder 1&quot;);</span>
+            }
+<span class="nc bnc" id="L48" title="All 2 branches missed.">            if (ouder2.getOuderlijkGezin() != null</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">                    &amp;&amp; ouder2.getOuderlijkGezin().isFamilieVan(ouder1)) {</span>
+<span class="nc" id="L50">                throw new RuntimeException(&quot;ouder 1 is familie van ouder 2&quot;);</span>
+            }
+        }
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (ouder1.getGebDat().compareTo(Calendar.getInstance()) &gt; 0){</span>
+<span class="nc" id="L54">            throw new RuntimeException(&quot;ouder1 moet nog geboren worden&quot;);</span>
+        }
+<span class="nc bnc" id="L56" title="All 4 branches missed.">        if (ouder2 != null &amp;&amp; ouder2.getGebDat().compareTo(Calendar.getInstance()) &gt; 0)</span>
+        {
+<span class="nc" id="L58">            throw new RuntimeException(&quot;ouder2 moet nog geboren worden&quot;);</span>
+        }
+        
+<span class="nc" id="L61">        this.nr = gezinsNr;</span>
+<span class="nc" id="L62">        this.ouder1 = ouder1;</span>
+<span class="nc" id="L63">        this.ouder2 = ouder2;</span>
+<span class="nc" id="L64">        this.kinderen = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L65">        this.huwelijksdatum = null;</span>
+<span class="nc" id="L66">        this.scheidingsdatum = null;</span>
+<span class="nc" id="L67">    }</span>
+
+    // ********methoden*****************************************
+    /**
+     * @return alle kinderen uit dit gezin
+     */
+    public List&lt;Persoon&gt; getKinderen() {
+<span class="nc" id="L74">        return (List&lt;Persoon&gt;) Collections.unmodifiableList(kinderen);</span>
+    }
+
+    /**
+     *
+     * @return het aantal kinderen in dit gezin
+     */
+    public int aantalKinderen() {
+<span class="nc" id="L82">        return kinderen.size();</span>
+    }
+
+    /**
+     *
+     * @return het nummer van dit gezin
+     */
+    public int getNr() {
+<span class="nc" id="L90">        return nr;</span>
+    }
+
+    /**
+     * @return de eerste ouder van dit gezin
+     */
+    public Persoon getOuder1() {
+<span class="nc" id="L97">        return ouder1;</span>
+    }
+
+    /**
+     * @return de tweede ouder van dit gezin (kan null zijn)
+     */
+    public Persoon getOuder2() {
+<span class="nc" id="L104">        return ouder2;</span>
+    }
+
+    /**
+     *
+     * @return het nr, de naam van de eerste ouder, gevolgd door de naam van de
+     * eventuele tweede ouder. Als dit gezin getrouwd is, wordt ook de huwelijksdatum
+     * vermeld.
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L115">        StringBuilder s = new StringBuilder();</span>
+<span class="nc" id="L116">        s.append(this.nr).append(&quot; &quot;);</span>
+<span class="nc" id="L117">        s.append(ouder1.getNaam());</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        if (ouder2 != null) {</span>
+<span class="nc" id="L119">            s.append(&quot; met &quot;);</span>
+<span class="nc" id="L120">            s.append(ouder2.getNaam());</span>
+        }
+<span class="nc bnc" id="L122" title="All 2 branches missed.">        if (heeftGetrouwdeOudersOp(Calendar.getInstance())) {</span>
+<span class="nc" id="L123">            s.append(&quot; &quot;).append(StringUtilities.datumString(huwelijksdatum));</span>
+        }
+<span class="nc" id="L125">        return s.toString();</span>
+    }
+
+    /**
+     * @return de datum van het huwelijk (kan null zijn)
+     */
+    public Calendar getHuwelijksdatum() {
+<span class="nc" id="L132">        return huwelijksdatum;</span>
+    }
+
+    /**
+     * @return de datum van scheiding (kan null zijn)
+     */
+    public Calendar getScheidingsdatum() {
+<span class="nc" id="L139">        return scheidingsdatum;</span>
+    }
+
+    /**
+     * Als ouders zijn gehuwd, en er nog geen scheidingsdatum is dan wordt deze
+     * geregistreerd.
+     *
+     * @param datum moet na de huwelijksdatum zijn.
+     * @return true als scheiding kan worden voltrokken, anders false
+     */
+    boolean setScheiding(Calendar datum) {
+<span class="nc bnc" id="L150" title="All 6 branches missed.">        if (datum != null &amp;&amp; this.scheidingsdatum == null &amp;&amp; huwelijksdatum != null</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">                &amp;&amp; datum.after(huwelijksdatum)) {</span>
+<span class="nc" id="L152">            this.scheidingsdatum = datum;</span>
+<span class="nc" id="L153">            return true;</span>
+        } else {
+<span class="nc" id="L155">            return false;</span>
+        }
+    }
+
+    /**
+     * registreert het huwelijk, mits dit gezin nog geen huwelijk is en beide
+     * ouders op deze datum mogen trouwen (pas op: het is mogelijk dat er al wel
+     * een huwelijk staat gepland, maar nog niet is voltrokken op deze datum)
+     * Mensen mogen niet trouwen voor hun achttiende.
+     *
+     * @param datum de huwelijksdatum
+     * @return false als huwelijk niet mocht worden voltrokken, anders true
+     */
+    boolean setHuwelijk(Calendar datum) {
+        //todo opgave 1
+<span class="nc bnc" id="L170" title="All 2 branches missed.">        if(this.huwelijksdatum != null)</span>
+<span class="nc" id="L171">            return false;</span>
+
+<span class="nc bnc" id="L173" title="All 6 branches missed.">        if(this.huwelijksdatum == null &amp;&amp; ouder1.kanTrouwenOp(datum) &amp;&amp; ouder2.kanTrouwenOp(datum))</span>
+        {
+<span class="nc" id="L175">            this.huwelijksdatum = datum;</span>
+<span class="nc" id="L176">            this.scheidingsdatum = null;</span>
+<span class="nc" id="L177">            return true;</span>
+        }
+        else
+<span class="nc" id="L180">            return false;</span>
+    }
+
+    /**
+     * @return het gezinsnummer, gevolgd door de namen van de ouder(s),
+     * de eventueel bekende huwelijksdatum, (als er kinderen zijn)
+     * de constante tekst '; kinderen:', en de voornamen van de
+     * kinderen uit deze relatie (per kind voorafgegaan door ' -')
+     */
+    public String beschrijving() {
+        //todo opgave 1
+<span class="nc" id="L191">        String beschrijvingText = nr + &quot; &quot;+ ouder1.getNaam() + &quot; met &quot; + ouder2.getNaam();</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">        if(huwelijksdatum != null){</span>
+<span class="nc" id="L193">            SimpleDateFormat huwedate = new SimpleDateFormat(&quot;d-M-yyyy&quot;);</span>
+<span class="nc" id="L194">            beschrijvingText += &quot; &quot; + huwedate.format(huwelijksdatum.getTime());</span>
+        }
+<span class="nc bnc" id="L196" title="All 2 branches missed.">        if(this.kinderen.size() &gt;=  1){</span>
+<span class="nc" id="L197">            beschrijvingText += &quot;; kinderen:&quot;;</span>
+<span class="nc" id="L198">            beschrijvingText = this.kinderen.stream().map((Persoon kinderen1) -&gt; &quot; -&quot; + kinderen1.getVoornamen()).reduce(beschrijvingText, String::concat);</span>
+        }
+<span class="nc" id="L200">        return beschrijvingText;</span>
+    }
+
+    /**
+     * Voegt kind toe aan dit gezin. Doet niets als dit kind al deel uitmaakt
+     * van deze familie.
+     *
+     * @param kind
+     */
+    void breidUitMet(Persoon kind) {
+<span class="nc bnc" id="L210" title="All 4 branches missed.">        if (!kinderen.contains(kind) &amp;&amp; !this.isFamilieVan(kind)) {</span>
+<span class="nc" id="L211">            kinderen.add(kind);</span>
+        }
+<span class="nc" id="L213">    }</span>
+
+    /**
+     * Controleert of deze familie niet al de gegeven persoon bevat.
+     *
+     * @param input
+     * @return true als deze familie de gegeven persoon bevat.
+     */
+    boolean isFamilieVan(Persoon input) {
+<span class="nc bnc" id="L222" title="All 8 branches missed.">        if ((this.ouder1.getNr() == input.getNr() || (this.ouder2 != null &amp;&amp; this.ouder2.getNr() == input.getNr())) || kinderen.contains(input)) {</span>
+<span class="nc" id="L223">            return true;</span>
+        }
+
+<span class="nc bnc" id="L226" title="All 4 branches missed.">        boolean output = this.ouder1.getOuderlijkGezin() != null &amp;&amp; this.ouder1.getOuderlijkGezin().isFamilieVan(input);</span>
+<span class="nc bnc" id="L227" title="All 4 branches missed.">        if (!output &amp;&amp; this.ouder2 != null) {</span>
+<span class="nc bnc" id="L228" title="All 4 branches missed.">            output = this.ouder2.getOuderlijkGezin() != null &amp;&amp; this.ouder2.getOuderlijkGezin().isFamilieVan(input);</span>
+        }
+<span class="nc" id="L230">        return output;</span>
+    }
+
+    /**
+     *
+     * @param datum
+     * @return true als dit gezin op datum getrouwd en nog niet gescheiden is,
+     * anders false
+     */
+    public boolean heeftGetrouwdeOudersOp(Calendar datum) {
+<span class="nc bnc" id="L240" title="All 4 branches missed.">        return isHuwelijkOp(datum) </span>
+                
+<span class="nc bnc" id="L242" title="All 2 branches missed.">         &amp;&amp; (scheidingsdatum == null || scheidingsdatum.after(datum));</span>
+    }
+
+    /**
+     *
+     * @param datum
+     * @return true als dit gezin op of voor deze datum getrouwd is, ongeacht of
+     * de ouders hierna gingen/gaan scheiden.
+     */
+    public boolean isHuwelijkOp(Calendar datum) {
+<span class="nc bnc" id="L252" title="All 4 branches missed.">         if (this.huwelijksdatum == null || datum == null)</span>
+<span class="nc" id="L253">            return false;    </span>
+<span class="nc bnc" id="L254" title="All 4 branches missed.">        else return this.huwelijksdatum == datum ||this.huwelijksdatum.before(datum);</span>
+    }
+
+    /**
+     *
+     * @return true als de ouders van dit gezin niet getrouwd zijn, anders false
+     */
+    public boolean isOngehuwd() {
+<span class="nc bnc" id="L262" title="All 2 branches missed.">        return huwelijksdatum == null;</span>
+    }
+
+    /**
+     *
+     * @param datum
+     * @return true als dit een gescheiden huwelijk is op datum, anders false
+     */
+    public boolean heeftGescheidenOudersOp(Calendar datum) {
+        //todo opgave 1
+<span class="nc bnc" id="L272" title="All 2 branches missed.">        if(this.scheidingsdatum == null)</span>
+        {
+<span class="nc" id="L274">            return false;</span>
+        }
+<span class="nc" id="L276">        return this.scheidingsdatum.before(datum);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

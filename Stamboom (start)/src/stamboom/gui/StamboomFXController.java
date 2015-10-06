@@ -67,7 +67,11 @@ public class StamboomFXController extends StamboomController implements Initiali
     }
 
     private void initComboboxes() {
-        //todo opgave 3 
+        cbPersonen.setItems(getAdministratie().getPersonen());
+        cbOuder1Invoer.setItems(getAdministratie().getPersonen());
+        cbOuder2Invoer.setItems(getAdministratie().getPersonen());
+        //cbGezin.setItems(getAdministratie().getGezinnen());
+        cbOuderlijkGezin.setItems(getAdministratie().getGezinnen());
 
     }
 

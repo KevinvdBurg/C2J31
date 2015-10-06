@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MenuItem.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;StamboomProject&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">stamboom.console</a> &gt; <span class="el_source">MenuItem.java</span></div><h1>MenuItem.java</h1><pre class="source lang-java linenums">package stamboom.console;
+
+<span class="nc" id="L3">public enum MenuItem {</span>
+
+<span class="nc" id="L5">    EXIT(&quot;exit&quot;),</span>
+<span class="nc" id="L6">    NEW_PERS(&quot;registreer persoon&quot;),</span>
+<span class="nc" id="L7">    NEW_ONGEHUWD_GEZIN(&quot;registreer ongehuwd gezin&quot;),</span>
+<span class="nc" id="L8">    NEW_HUWELIJK(&quot;registreer huwelijk&quot;),</span>
+<span class="nc" id="L9">    SCHEIDING(&quot;registreer scheiding&quot;),</span>
+<span class="nc" id="L10">    SHOW_PERS(&quot;toon gegevens persoon&quot;),</span>
+<span class="nc" id="L11">    SHOW_GEZIN(&quot;toon gegevens gezin&quot;),</span>
+<span class="nc" id="L12">    SAVE(&quot;save admin&quot;),</span>
+<span class="nc" id="L13">    LOAD(&quot;load admin;&quot;),</span>
+<span class="nc" id="L14">    GETSTAMBOOM(&quot;get the entire lineage to infinity&quot;),</span>
+<span class="nc" id="L15">    GETSTAMBOOMCOUNT(&quot;get the amount of ancestors as int&quot;);</span>
+    
+    private final String omschr;
+
+<span class="nc" id="L19">    private MenuItem(String omschr) {</span>
+<span class="nc" id="L20">        this.omschr = omschr;</span>
+<span class="nc" id="L21">    }</span>
+
+    /**
+     * @return  the omschr
+     * @uml.property  name=&quot;omschr&quot;
+     */
+    public String getOmschr() {
+<span class="nc" id="L28">        return omschr;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -2,6 +2,9 @@ package stamboom.domain;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import javafx.collections.FXCollections;
+import static javafx.collections.FXCollections.observableList;
+import javafx.collections.ObservableList;
 
 public class Administratie {
 
@@ -10,6 +13,8 @@ public class Administratie {
     private int nextPersNr;
     private final List<Persoon> personen;
     private final List<Gezin> gezinnen;
+    private transient ObservableList<Persoon> observablePersonen;
+    private transient ObservableList<Gezin> observableGezinnen;
 
     //***********************constructoren***********************************
     /**
@@ -19,9 +24,11 @@ public class Administratie {
      */
     public Administratie() {
         //todo opgav-e 1
-        nextGezinsNr = nextPersNr = 1;
-        this.personen = new ArrayList<Persoon>();
-        this.gezinnen = new ArrayList<Gezin>();
+        //nextGezinsNr = nextPersNr +1;
+        personen = new ArrayList<>();
+        gezinnen = new ArrayList<>();
+        observablePersonen = observableList(personen);
+        observableGezinnen = observableList(gezinnen);
     }
 
     //**********************methoden****************************************
@@ -336,12 +343,15 @@ public class Administratie {
      *
      * @return de geregistreerde personen
      */
-    public List<Persoon> getPersonen() {
-        // todo opgave 1
-        List<Persoon> PersonenList = new ArrayList<>();
-        PersonenList.addAll(this.personen);
-        return PersonenList;
+    /**
+     *
+     * @return de geregistreerde personen
+     */
+    public ObservableList<Persoon> getPersonen() {
+        return (ObservableList<Persoon>)FXCollections.unmodifiableObservableList(observablePersonen);
     }
+    
+    
 
     /**
      *
@@ -386,8 +396,8 @@ public class Administratie {
      *
      * @return de geregistreerde gezinnen
      */
-    public List<Gezin> getGezinnen() {
-        return null;
+    public ObservableList<Gezin> getGezinnen() {
+        return (ObservableList<Gezin>)FXCollections.unmodifiableObservableList(observableGezinnen);
     }
 
     /**

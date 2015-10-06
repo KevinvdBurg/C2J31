@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SerializationMediator.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;StamboomProject&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">stamboom.storage</a> &gt; <span class="el_source">SerializationMediator.java</span></div><h1>SerializationMediator.java</h1><pre class="source lang-java linenums">/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package stamboom.storage;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Properties;
+import stamboom.domain.Administratie;
+
+public class SerializationMediator implements IStorageMediator {
+
+    /**
+     * bevat de bestandslocatie. Properties is een subclasse van HashTable, een
+     * alternatief voor een List. Het verschil is dat een List een volgorde heeft,
+     * en een HashTable een key/value index die wordt opgevraagd niet op basis van
+     * positie, maar op key.
+     */
+    private Properties props;
+
+    /**
+     * creation of a non configured serialization mediator
+     */
+<span class="nc" id="L25">    public SerializationMediator() {</span>
+<span class="nc" id="L26">        props = null;</span>
+<span class="nc" id="L27">    }</span>
+
+    @Override
+    public Administratie load() throws IOException {
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (!isCorrectlyConfigured()) {</span>
+<span class="nc" id="L32">            throw new RuntimeException(&quot;Serialization mediator isn't initialized correctly.&quot;);</span>
+        }
+        
+        // todo opgave 2
+<span class="nc" id="L36">        return null;</span>
+    }
+
+    @Override
+    public void save(Administratie admin) throws IOException {
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (!isCorrectlyConfigured()) {</span>
+<span class="nc" id="L42">            throw new RuntimeException(&quot;Serialization mediator isn't initialized correctly.&quot;);</span>
+        }
+
+        // todo opgave 2
+  
+<span class="nc" id="L47">    }</span>
+
+    /**
+     * Laadt de instellingen, in de vorm van een Properties bestand, en controleert
+     * of deze in de juiste vorm is.
+     * @param props
+     * @return
+     */
+    @Override
+    public boolean configure(Properties props) {
+<span class="nc" id="L57">        this.props = props;</span>
+<span class="nc" id="L58">        return isCorrectlyConfigured();</span>
+    }
+
+    @Override
+    public Properties config() {
+<span class="nc" id="L63">        return props;</span>
+    }
+
+    /**
+     * Controleert of er een geldig Key/Value paar bestaat in de Properties.
+     * De bedoeling is dat er een Key &quot;file&quot; is, en de Value van die Key 
+     * een String representatie van een FilePath is (eg. C:\\Users\Username\test.txt).
+     * 
+     * @return true if config() contains at least a key &quot;file&quot; and the
+     * corresponding value is formatted like a file path
+     */
+    @Override
+    public boolean isCorrectlyConfigured() {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (props == null) {</span>
+<span class="nc" id="L77">            return false;</span>
+        }
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        return props.containsKey(&quot;file&quot;) </span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">                &amp;&amp; props.getProperty(&quot;file&quot;).contains(File.separator);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

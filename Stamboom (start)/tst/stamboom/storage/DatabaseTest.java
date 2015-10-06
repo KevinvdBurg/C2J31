@@ -89,6 +89,7 @@ public class DatabaseTest {
         Persoon teuntje = adm.getPersoon(2);
         Persoon tom = adm.getPersoon(3);
         Persoon anja = adm.getPersoon(4);
+        
         assertEquals("aantal personen in database onjuist", 4, adm.aantalGeregistreerdePersonen());
         ArrayList<Persoon> swinkelsen = adm.getPersonenMetAchternaam("Swinkels");
         assertEquals("aantal personen met Swinkels-achternaam onjuist", 2, swinkelsen.size());
