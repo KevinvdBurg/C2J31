@@ -4,8 +4,11 @@
  */
 package stamboom.storage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 import stamboom.domain.Administratie;
@@ -14,10 +17,14 @@ public class DatabaseMediator implements IStorageMediator {
 
     private Properties props;
     private Connection conn;
+    String result = "";
+    InputStream inputStream;
+    
 
     @Override
     public Administratie load() throws IOException {
-        //todo opgave 4
+        props = getPropValues(); 
+        configure(props);
         return null;
     }
 
@@ -79,7 +86,20 @@ public class DatabaseMediator implements IStorageMediator {
     }
 
     private void initConnection() throws SQLException {
-        //opgave 4
+        String driver = props.getProperty("driver");
+        String url = props.getProperty("url");
+        String username = props.getProperty("username");
+        String password = props.getProperty("password");
+        
+        System.out.print(driver);
+        try {
+            
+            
+            
+            
+        } catch (Exception e) {
+            System.out.print(e);
+        }
     }
 
     private void closeConnection() {
@@ -90,4 +110,27 @@ public class DatabaseMediator implements IStorageMediator {
             System.err.println(ex.getMessage());
         }
     }
+    
+   public Properties getPropValues() throws IOException {
+           Properties newProp = null;     
+            try {
+                    String propFileName = "database.properties";
+                    inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+
+                    if (inputStream != null) 
+                    {
+                        newProp.load(inputStream);
+                    } 
+                    else 
+                    {
+                        throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+                    }
+
+		} catch (Exception e) {
+			System.out.println("Exception: " + e);
+		} finally {
+			inputStream.close();
+		}
+            return newProp;
+	}
 }

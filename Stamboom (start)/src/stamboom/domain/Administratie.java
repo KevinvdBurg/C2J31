@@ -291,7 +291,7 @@ public class Administratie {
      * @return het aantal geregistreerde personen
      */
     public int aantalGeregistreerdePersonen() {
-        return nextPersNr - 1;
+        return nextPersNr -1;
     }
 
     /**
