@@ -8,15 +8,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-import stamboom.domain.Administratie;
+import stamboom.domain.*;
 import stamboom.storage.DatabaseMediator;
 import stamboom.storage.IStorageMediator;
+import stamboom.storage.SerializationMediator;
 
 public class StamboomController {
 
     private Administratie admin;
     private IStorageMediator storageMediator;
-    private DatabaseMediator databaseMediator;
 
     /**
      * creatie van stamboomcontroller met lege administratie en onbekend
@@ -44,9 +44,17 @@ public class StamboomController {
      * @param bestand
      * @throws IOException
      */
+
     public void serialize(File bestand) throws IOException {
         //todo opgave 2
+        Properties serProps = new Properties();
+       
+        serProps.put("file", bestand);
         
+        storageMediator = new SerializationMediator();
+        storageMediator.configure(serProps);
+        
+        storageMediator.save(admin);
     }
 
     /**
@@ -56,8 +64,13 @@ public class StamboomController {
      * @throws IOException
      */
     public void deserialize(File bestand) throws IOException {
-        //todo opgave 2
-  
+        //todo opgave 2       
+        storageMediator = new SerializationMediator();
+        Properties loadedProps = new Properties();
+        loadedProps.put("file", bestand);
+        storageMediator.configure(loadedProps);
+        
+        admin = storageMediator.load();
     }
     
     // opgave 4
@@ -77,7 +90,8 @@ public class StamboomController {
      * @throws IOException
      */
     public void loadFromDatabase() throws IOException {
-        //todo opgave 4
+        initDatabaseMedium();
+        admin = storageMediator.load();
     }
 
     /**
@@ -86,7 +100,7 @@ public class StamboomController {
      * @throws IOException
      */
     public void saveToDatabase() throws IOException {
-        
+        initDatabaseMedium();
+        storageMediator.save(admin);
     }
-
 }

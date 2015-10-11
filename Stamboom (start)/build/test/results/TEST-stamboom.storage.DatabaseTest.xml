@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="1" failures="1" hostname="MBPRetivanKevin" name="stamboom.storage.DatabaseTest" skipped="0" tests="2" time="0.496" timestamp="2015-10-11T12:15:34">
+<testsuite errors="1" failures="0" hostname="MBPRetivanKevin" name="stamboom.storage.DatabaseTest" skipped="0" tests="2" time="0.205" timestamp="2015-10-11T13:01:39">
   <properties>
     <property name="libs.jsp-compiler.javadoc" value="" />
     <property name="netbeans.autoupdate.country" value="NL" />
@@ -69,7 +69,7 @@
     <property name="libs.j2me_common_ant.maven-pom" value="" />
     <property name="libs.spring-webmvc3.0.maven-pom" value="" />
     <property name="libs.swing-layout.maven-pom" value="" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner stamboom.storage.DatabaseTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Users/kvdb/Documents/Codes/C2J31/Stamboom (start)/build/test/results/TEST-stamboom.storage.DatabaseTest.xml crashfile=/Users/kvdb/Documents/Codes/C2J31/Stamboom (start)/build/junitvmwatcher7049155237838531722.properties propsfile=/Users/kvdb/Documents/Codes/C2J31/Stamboom (start)/build/junit5848426651991324125.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner stamboom.storage.DatabaseTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Users/kvdb/Documents/Codes/C2J31/Stamboom (start)/build/test/results/TEST-stamboom.storage.DatabaseTest.xml crashfile=/Users/kvdb/Documents/Codes/C2J31/Stamboom (start)/build/junitvmwatcher224054468546180447.properties propsfile=/Users/kvdb/Documents/Codes/C2J31/Stamboom (start)/build/junit1349273246034154544.properties" />
     <property name="auxiliary.org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapAnnotations" value="WRAP_NEVER" />
     <property name="build.classes.dir" value="build/classes" />
     <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
@@ -116,7 +116,7 @@
     <property name="javac.debug" value="true" />
     <property name="javadoc.splitindex" value="true" />
     <property name="file.separator" value="/" />
-    <property name="javac.includesfile.binary" value="/Users/kvdb/Documents/Codes/C2J31/Stamboom (start)/null1756051387" />
+    <property name="javac.includesfile.binary" value="/Users/kvdb/Documents/Codes/C2J31/Stamboom (start)/null1233712625" />
     <property name="libs.junit_4.maven-pom" value="" />
     <property name="mkdist.disabled" value="false" />
     <property name="javac.test.processorpath" value="/Applications/NetBeans/NetBeans 8.0.2.app/Contents/Resources/NetBeans/ide/modules/ext/mysql-connector-java-5.1.23-bin.jar:/Applications/NetBeans/NetBeans 8.0.2.app/Contents/Resources/NetBeans/platform/modules/ext/junit-4.10.jar:/Applications/NetBeans/NetBeans 8.0.2.app/Contents/Resources/NetBeans/java/modules/ext/junit-3.8.2.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home/jre/lib/javaws.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home/jre/lib/deploy.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home/jre/lib/plugin.jar:sqlite-jdbc-3.8.11.2.jar:build/classes" />
@@ -454,17 +454,14 @@
     <property name="javafx.deploy.installpermanently" value="false" />
     <property name="libs.javaee-web-api-7.0.javadoc" value="/Applications/NetBeans/NetBeans 8.0.2.app/Contents/Resources/NetBeans/enterprise/docs/javaee-doc-api.jar" />
   </properties>
-  <testcase classname="stamboom.storage.DatabaseTest" name="testSaveToDatabase" time="0.01">
+  <testcase classname="stamboom.storage.DatabaseTest" name="testSaveToDatabase" time="0.113" />
+  <testcase classname="stamboom.storage.DatabaseTest" name="testLoadFromDataBase" time="0.003">
     <error type="java.lang.NullPointerException">java.lang.NullPointerException
-	at stamboom.controller.StamboomController.saveToDatabase(StamboomController.java:89)
-	at stamboom.storage.DatabaseTest.testSaveToDatabase(DatabaseTest.java:78)
+	at stamboom.storage.DatabaseTest.testLoadFromDataBase(DatabaseTest.java:87)
 </error>
   </testcase>
-  <testcase classname="stamboom.storage.DatabaseTest" name="testLoadFromDataBase" time="0.001">
-    <failure message="aantal personen in database onjuist expected:&lt;4&gt; but was:&lt;0&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: aantal personen in database onjuist expected:&lt;4&gt; but was:&lt;0&gt;
-	at stamboom.storage.DatabaseTest.testLoadFromDataBase(DatabaseTest.java:92)
-</failure>
-  </testcase>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
+  <system-out><![CDATA[org.sqlite.jdbc4org.sqlite.jdbc4]]></system-out>
+  <system-err><![CDATA[JDBC Driver not found!
+JDBC Driver not found!
+]]></system-err>
 </testsuite>

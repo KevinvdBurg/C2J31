@@ -21,14 +21,12 @@ public class DatabaseMediator implements IStorageMediator {
     InputStream inputStream;
 
     public DatabaseMediator(Properties props) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         configure(props);
     }
     
 
     @Override
     public Administratie load() throws IOException {
-        props = getPropValues(); 
-        configure(props);
         return null;
     }
 
@@ -97,9 +95,20 @@ public class DatabaseMediator implements IStorageMediator {
         
         System.out.print(driver);
         try {
-            
+            Class.forName("org.sqlite.jdbc4");
         } catch (Exception e) {
-            System.out.print(e);
+            System.err.println("JDBC Driver not found!");
+        }
+        
+        try{
+            conn = DriverManager.getConnection("jdbc:sqlite:EpicSQLitDB", props);
+        }
+        catch (Exception ex) {
+            System.err.println("Connection Failed");
+        }
+        
+        if (conn == null) {
+            System.err.println("COnnection could not be made");
         }
     }
 
@@ -112,26 +121,26 @@ public class DatabaseMediator implements IStorageMediator {
         }
     }
     
-   public Properties getPropValues() throws IOException {
-           Properties newProp = null;     
-            try {
-                    String propFileName = "database.properties";
-                    inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
-
-                    if (inputStream != null) 
-                    {
-                        newProp.load(inputStream);
-                    } 
-                    else 
-                    {
-                        throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
-                    }
-
-		} catch (Exception e) {
-			System.out.println("Exception: " + e);
-		} finally {
-			inputStream.close();
-		}
-            return newProp;
-	}
+//   public Properties getPropValues() throws IOException {
+//           Properties newProp = null;     
+//            try {
+//                    String propFileName = "database.properties";
+//                    inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+//
+//                    if (inputStream != null) 
+//                    {
+//                        newProp.load(inputStream);
+//                    } 
+//                    else 
+//                    {
+//                        throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+//                    }
+//
+//		} catch (Exception e) {
+//			System.out.println("Exception: " + e);
+//		} finally {
+//			inputStream.close();
+//		}
+//            return newProp;
+//	}
 }

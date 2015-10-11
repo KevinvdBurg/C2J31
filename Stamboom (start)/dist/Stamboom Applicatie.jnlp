@@ -8,11 +8,11 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="StamboomProject.jar" size="38653" download="eager" />
+    <jar href="StamboomProject.jar" size="38681" download="eager" />
     <jar href="lib/junit-3.8.2.jar" size="132937" download="eager" />
-    <jar href="lib/junit-4.10.jar" size="281018" download="eager" />
-    <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="860440" download="eager" />
-    <jar href="lib/sqlite-jdbc-3.8.11.2.jar" size="5592364" download="eager" />
+    <jar href="lib/junit-4.10.jar" size="281016" download="eager" />
+    <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="860438" download="eager" />
+    <jar href="lib/sqlite-jdbc-3.8.11.2.jar" size="5592362" download="eager" />
   </resources>
 <security>
   <all-permissions/>
