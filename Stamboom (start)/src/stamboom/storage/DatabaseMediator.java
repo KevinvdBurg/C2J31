@@ -19,6 +19,10 @@ public class DatabaseMediator implements IStorageMediator {
     private Connection conn;
     String result = "";
     InputStream inputStream;
+
+    public DatabaseMediator(Properties props) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 
     @Override
@@ -93,9 +97,6 @@ public class DatabaseMediator implements IStorageMediator {
         
         System.out.print(driver);
         try {
-            
-            
-            
             
         } catch (Exception e) {
             System.out.print(e);

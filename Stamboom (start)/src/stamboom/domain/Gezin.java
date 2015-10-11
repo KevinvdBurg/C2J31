@@ -2,6 +2,10 @@ package stamboom.domain;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import stamboom.util.StringUtilities;
 
 public class Gezin {
@@ -195,7 +199,9 @@ public class Gezin {
         }
         if(this.kinderen.size() >=  1){
             beschrijvingText += "; kinderen:";
-            beschrijvingText = this.kinderen.stream().map((Persoon kinderen1) -> " -" + kinderen1.getVoornamen()).reduce(beschrijvingText, String::concat);
+            for (Persoon kinderen1 : this.kinderen) {
+                beschrijvingText += " -" + kinderen1.getVoornamen();
+            }
         }
         return beschrijvingText;
     }
@@ -219,13 +225,17 @@ public class Gezin {
      * @return true als deze familie de gegeven persoon bevat.
      */
     boolean isFamilieVan(Persoon input) {
-        if ((this.ouder1.getNr() == input.getNr() || (this.ouder2 != null && this.ouder2.getNr() == input.getNr())) || kinderen.contains(input)) {
+        if (this.ouder1.getNr() == input.getNr()
+                || (this.ouder2 != null && this.ouder2.getNr() == input.getNr())
+                || kinderen.contains(input)) {
             return true;
         }
 
-        boolean output = this.ouder1.getOuderlijkGezin() != null && this.ouder1.getOuderlijkGezin().isFamilieVan(input);
+        boolean output = this.ouder1.getOuderlijkGezin() != null
+                && this.ouder1.getOuderlijkGezin().isFamilieVan(input);
         if (!output && this.ouder2 != null) {
-            output = this.ouder2.getOuderlijkGezin() != null && this.ouder2.getOuderlijkGezin().isFamilieVan(input);
+            output = this.ouder2.getOuderlijkGezin() != null
+                    && this.ouder2.getOuderlijkGezin().isFamilieVan(input);
         }
         return output;
     }
@@ -237,9 +247,8 @@ public class Gezin {
      * anders false
      */
     public boolean heeftGetrouwdeOudersOp(Calendar datum) {
-        return isHuwelijkOp(datum) 
-                
-         && (scheidingsdatum == null || scheidingsdatum.after(datum));
+        return isHuwelijkOp(datum)
+                && (scheidingsdatum == null || scheidingsdatum.after(datum));
     }
 
     /**
@@ -251,7 +260,10 @@ public class Gezin {
     public boolean isHuwelijkOp(Calendar datum) {
          if (this.huwelijksdatum == null || datum == null)
             return false;    
-        else return this.huwelijksdatum == datum ||this.huwelijksdatum.before(datum);
+        else if (this.huwelijksdatum == datum ||this.huwelijksdatum.before(datum) )
+            return true;
+        else
+            return false;
     }
 
     /**

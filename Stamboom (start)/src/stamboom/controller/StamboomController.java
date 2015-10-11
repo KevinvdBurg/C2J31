@@ -5,14 +5,18 @@
 package stamboom.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 import stamboom.domain.Administratie;
+import stamboom.storage.DatabaseMediator;
 import stamboom.storage.IStorageMediator;
 
 public class StamboomController {
 
     private Administratie admin;
     private IStorageMediator storageMediator;
+    private DatabaseMediator databaseMediator;
 
     /**
      * creatie van stamboomcontroller met lege administratie en onbekend
@@ -58,13 +62,13 @@ public class StamboomController {
     
     // opgave 4
     private void initDatabaseMedium() throws IOException {
-//        if (!(storageMediator instanceof DatabaseMediator)) {
-//            Properties props = new Properties();
-//            try (FileInputStream in = new FileInputStream("database.properties")) {
-//                props.load(in);
-//            }
-//            storageMediator = new DatabaseMediator(props);
-//        }
+        if (!(storageMediator instanceof DatabaseMediator)) {
+            Properties props = new Properties();
+            try (FileInputStream in = new FileInputStream("database.properties")) {
+                props.load(in);
+            }
+            storageMediator = new DatabaseMediator(props);
+        }
     }
     
     /**
@@ -82,7 +86,7 @@ public class StamboomController {
      * @throws IOException
      */
     public void saveToDatabase() throws IOException {
-        //todo opgave 4
+        
     }
 
 }

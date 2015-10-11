@@ -81,7 +81,6 @@ public class DatabaseTest {
 
     @Test
     public void testLoadFromDataBase() throws IOException {
-
         controller.loadFromDatabase();
         Administratie adm = controller.getAdministratie();
 
