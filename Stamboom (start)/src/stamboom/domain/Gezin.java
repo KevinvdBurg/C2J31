@@ -38,7 +38,7 @@ public class Gezin implements Serializable {
      * @param ouder1 mag niet null zijn
      * @param ouder2 ongelijk aan ouder1
      */
-    Gezin(int gezinsNr, Persoon ouder1, Persoon ouder2) {
+    public Gezin(int gezinsNr, Persoon ouder1, Persoon ouder2) {
         if (ouder1 == null) {
             throw new RuntimeException("Eerste ouder mag niet null zijn");
         }
