@@ -28,7 +28,9 @@ public class DatabaseMediator implements IStorageMediator {
     
     @Override
     public Administratie load() throws IOException {
-        return null;
+        //select stament
+        //loop
+       return null;
     }
 
     @Override
