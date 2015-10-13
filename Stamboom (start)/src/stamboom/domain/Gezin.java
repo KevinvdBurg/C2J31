@@ -39,12 +39,14 @@ public class Gezin implements Serializable {
      * @param ouder2 ongelijk aan ouder1
      */
     public Gezin(int gezinsNr, Persoon ouder1, Persoon ouder2) {
+        
         if (ouder1 == null) {
             throw new RuntimeException("Eerste ouder mag niet null zijn");
         }
         if (ouder1 == ouder2) {
             throw new RuntimeException("ouders hetzelfde");
         }
+        
         this.nr = gezinsNr;
         this.ouder1 = ouder1;
         this.ouder2 = ouder2;

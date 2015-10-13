@@ -84,6 +84,7 @@ public class Administratie implements Serializable {
         }
         
         observablePersonen.add(newPersoon);
+        
         if(ouderlijkGezin != null)
         {
             newPersoon.getOuderlijkGezin().breidUitMet(newPersoon);
